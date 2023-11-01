@@ -1,10 +1,13 @@
 <script>
 // importo axios
 import axios from 'axios';
+// importo CardElement
+import CardElement from './CardElement.vue'
 
 export default {
     name: 'BattleComponent',
     components: {
+        CardElement,
     },
     data() {
         return {
