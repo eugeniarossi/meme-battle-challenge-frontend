@@ -34,7 +34,7 @@ export default {
         async startChallenge() {
             while (this.memes.length < 2) {
                 try {
-                    await this.getMeme(); // Chiamo getMeme() 
+                    await this.getMeme(); // chiamo getMeme() 
                     console.log('ora la lunghezza di memes è', this.memes.length);
                     await new Promise(resolve => setTimeout(resolve, 500));
                 } catch (error) {
@@ -51,7 +51,11 @@ export default {
 </script>
 
 <template>
-    
+    <div class="row d-flex">
+        <div class="col" v-for="meme in memes">
+            <CardElement :meme="meme" />
+        </div>
+    </div>
 </template>
 
 <style lang="scss"></style>
