@@ -13,6 +13,7 @@ export default {
         return {
             memes: [], // memes attualmente nella battle
             votedMeme: null, // meme votato
+            dbMemes: [],
         }
     },
     methods: {
@@ -30,7 +31,7 @@ export default {
                     console.error('Errore:', error);
                     throw error;
                 }
-            } /////// posso fare una chiamata post per salvare dati nel db qui ///
+            }
         },
         async startChallenge() {
             while (this.memes.length < 2) {
@@ -44,16 +45,53 @@ export default {
                 }
             }
         },
+        saveMemeToDb(index) {
+            const meme = this.memes[index];
+            // Object to send to backend
+            const data = {
+                author: meme.author,
+                nsfw: meme.nsfw,
+                postLink: meme.postLink,
+                preview: meme.preview,
+                score: meme.score,
+                spoiler: meme.spoiler,
+                subreddit: meme.subreddit,
+                title: meme.title,
+                ups: meme.ups,
+                url: meme.url
+            };
+
+            axios.post('http://127.0.0.1:8000/api/memes', data)
+                .then((response) => {
+                    console.log(response);
+                });
+        },
         voteMeme(index) {
             const meme = this.memes[index];
-            meme.score = meme.score + 1;
-            console.log('SCORE', meme.score);
 
+            meme.score = meme.score + 1;
+/*
+            axios.get('http://127.0.0.1:8000/api/memes')
+                .then((response) => {
+                    this.dbMemes = response.data;
+                    console.log('MEME SALVATI NEL DB', this.dbMemes);
+                });
+                
+                if (!this.dbMemes.includes(meme.title)) { // se lo score del meme è uguale a 1 (il meme non esiste nel db), allora eseguo saveMemeToDb()
+                        console.log('NON ESISTE NEL DB', meme.title)
+                        this.saveMemeToDb(index); 
+                    } else {
+                        console.log('ESISTE GIà');
+                    } */
+            if (meme.title === 1) { // se lo score del meme è uguale a 1 (il meme non esiste nel db), allora eseguo saveMemeToDb()
+                this.saveMemeToDb(index); /////////// DA CORREGERE PERCHè POTREBBE COMPARIRE DINUOVO UNO STESSO MEME ////////
+            }
+
+            // elimino dall'array memes il meme che ha perso
             this.memes.splice(0, index); // rimuovi gli elementi prima dell'indice
             this.memes.splice(index + 1) // rimuovi gli elementi dopo l'indice
-            console.log('MEMES', this.memes);
 
-            this.getMeme();
+            this.getMeme(); // chiama un nuovo meme
         }
     },
     created() {
