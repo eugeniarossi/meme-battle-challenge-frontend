@@ -60,36 +60,35 @@ export default {
                 ups: meme.ups,
                 url: meme.url
             };
-
             axios.post('http://127.0.0.1:8000/api/memes', data)
                 .then((response) => {
                     console.log(response);
                 });
         },
-        voteMeme(index) {
-            const meme = this.memes[index];
+        async getMemesUrls() {
+            try {
+                const response = await axios.get('http://127.0.0.1:8000/api/memes');
+                this.dbMemes = response.data;
 
-            meme.score = meme.score + 1;
-/*
-            axios.get('http://127.0.0.1:8000/api/memes')
-                .then((response) => {
-                    this.dbMemes = response.data;
-                    console.log('MEME SALVATI NEL DB', this.dbMemes);
-                });
-                
-                if (!this.dbMemes.includes(meme.title)) { // se lo score del meme è uguale a 1 (il meme non esiste nel db), allora eseguo saveMemeToDb()
-                        console.log('NON ESISTE NEL DB', meme.title)
-                        this.saveMemeToDb(index); 
-                    } else {
-                        console.log('ESISTE GIà');
-                    } */
-            if (meme.title === 1) { // se lo score del meme è uguale a 1 (il meme non esiste nel db), allora eseguo saveMemeToDb()
-                this.saveMemeToDb(index); /////////// DA CORREGERE PERCHè POTREBBE COMPARIRE DINUOVO UNO STESSO MEME ////////
+            } catch (error) {
+                console.error('Errore durante il recupero degli url dei meme dal server:', error);
+            }
+        },
+        async voteMeme(index) {
+            const meme = this.memes[index];
+            meme.score = meme.score + 1; //// CAMBIARE
+
+            await this.getMemesUrls();
+
+            if (!this.dbMemes.includes(meme.url)) { // se non esiste già un meme nel db con lo stesso url del meme votato allora aggiungo il meme al db
+                this.saveMemeToDb(index); // richiamo la funzione saveMemeToDb 
+            } else {
+                console.log('ESISTE GIà'); ///// QUI EDIT //////////////////////////////////////////7*********************
             }
 
-            // elimino dall'array memes il meme che ha perso
-            this.memes.splice(0, index); // rimuovi gli elementi prima dell'indice
-            this.memes.splice(index + 1) // rimuovi gli elementi dopo l'indice
+            // elimino il meme perdente dall'array memes
+            this.memes.splice(0, index); // rimuovi gli elementi prima dell'index del meme vincitore
+            this.memes.splice(index + 1) // rimuovi gli elementi dopo l'index del meme vincitore
 
             this.getMeme(); // chiama un nuovo meme
         }
