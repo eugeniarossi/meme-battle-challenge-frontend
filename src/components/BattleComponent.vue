@@ -12,6 +12,7 @@ export default {
     data() {
         return {
             memes: [], // memes attualmente nella battle
+            votedMeme: null, // meme votato
         }
     },
     methods: {
@@ -42,6 +43,17 @@ export default {
                     break; // in caso di errore esce dal loop
                 }
             }
+        },
+        voteMeme(index) {
+            const meme = this.memes[index];
+            meme.score = meme.score + 1;
+            console.log('SCORE', meme.score);
+
+            this.memes.splice(0, index); // rimuovi gli elementi prima dell'indice
+            this.memes.splice(index + 1) // rimuovi gli elementi dopo l'indice
+            console.log('MEMES', this.memes);
+
+            this.getMeme();
         }
     },
     created() {
@@ -52,8 +64,9 @@ export default {
 
 <template>
     <div class="row d-flex">
-        <div class="col" v-for="meme in memes">
-            <CardElement :meme="meme" />
+        <div class="col" v-for="(meme, index) in memes">
+            <CardElement :meme="meme" @click="memes.length > 1 && voteMeme(index)" />
+            <!-- la funzione voteMeme viene eseguita solo se la lughezza di memes è maggiore di uno -->
         </div>
     </div>
 </template>
