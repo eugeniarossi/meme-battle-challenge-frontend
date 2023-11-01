@@ -30,7 +30,22 @@ export default {
                     throw error;
                 }
             } /////// posso fare una chiamata post per salvare dati nel db qui ///
+        },
+        async startChallenge() {
+            while (this.memes.length < 2) {
+                try {
+                    await this.getMeme(); // Chiamo getMeme() 
+                    console.log('ora la lunghezza di memes è', this.memes.length);
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                } catch (error) {
+                    console.error('Errore:', error);
+                    break; // in caso di errore esce dal loop
+                }
+            }
         }
+    },
+    created() {
+        this.startChallenge();
     }
 }
 </script>
