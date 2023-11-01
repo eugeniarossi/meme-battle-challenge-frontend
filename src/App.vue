@@ -1,16 +1,16 @@
 <script>
-import HelloApp from './components/HelloApp.vue';
+import AppHome from './components/AppHome.vue';
 
 export default {
   name: 'App',
   components: {
-    HelloApp
+    AppHome
   }
 }
 </script>
 
 <template>
-  <HelloApp />
+  <AppHome />
 </template>
 
 <style lang="scss"></style>
