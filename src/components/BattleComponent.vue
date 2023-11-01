@@ -22,7 +22,7 @@ export default {
                 try {
                     const newMeme = await axios.get('https://meme-api.com/gimme').then(response => response.data);
                     // salvo i dati della chiamata API nella variabile newMeme
-            
+
                     this.memes.push(newMeme); // pusho newMeme nell'array memes
                 } catch (error) {
                     console.error('Errore:', error);
@@ -66,22 +66,25 @@ export default {
             try {
                 const response = await axios.get('http://127.0.0.1:8000/api/memes');
                 this.dbMemes = response.data;
+                console.log('VEDI QUII', this.dbMemes);
             } catch (error) {
                 console.error('Errore durante il recupero dei dati:', error);
             }
         },
         async voteMeme(index) {
             const meme = this.memes[index];
-
+            console.log('MEME CONSIDERATO', meme);
             await this.getDbMemes();
 
             /////////////////////////////////////////////////////////////////////////////////////////////////
             let found = false;
+            let memeId;
 
             for (let i = 0; i < this.dbMemes.length; i++) {
                 console.log('passaggio');
                 if (meme.url === this.dbMemes[i].url) {
                     found = true;
+                    memeId = this.dbMemes[i].id;
                     break;
                 }
             }
@@ -90,7 +93,13 @@ export default {
                 meme.score = 1; // aggiungo la proprietà score e assegno 
                 this.saveMemeToDb(index); // se non esiste già un meme nel db con lo stesso url del meme votato allora aggiungo il meme al db
             } else {
-                console.log('ESISTE GIà');
+                // se il meme esiste già nel db faccio una richiesta update al database per aggiornare il suo score
+                axios.put(`http://127.0.0.1:8000/api/memes/${memeId}`, {})
+                    .then(response => {
+                        console.log('Punteggio del meme aggiornato con successo');
+                    }).catch(error => {
+                        console.error('Errore durante aggiornamento del punteggio del meme:', error);
+                    });
             }
             /////////////////////////////////////////////////////////////////////////////////////////////////
 
