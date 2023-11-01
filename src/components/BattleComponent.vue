@@ -22,10 +22,7 @@ export default {
                 try {
                     const newMeme = await axios.get('https://meme-api.com/gimme').then(response => response.data);
                     // salvo i dati della chiamata API nella variabile newMeme
-
-                    // aggiungo la proprietà score e assegno 0
-                    newMeme.score = 0;
-
+            
                     this.memes.push(newMeme); // pusho newMeme nell'array memes
                 } catch (error) {
                     console.error('Errore:', error);
@@ -62,29 +59,40 @@ export default {
             };
             axios.post('http://127.0.0.1:8000/api/memes', data)
                 .then((response) => {
-                    console.log(response);
+                    //console.log(response);
                 });
         },
-        async getMemesUrls() {
+        async getDbMemes() {
             try {
                 const response = await axios.get('http://127.0.0.1:8000/api/memes');
                 this.dbMemes = response.data;
-
             } catch (error) {
-                console.error('Errore durante il recupero degli url dei meme dal server:', error);
+                console.error('Errore durante il recupero dei dati:', error);
             }
         },
         async voteMeme(index) {
             const meme = this.memes[index];
-            meme.score = meme.score + 1; //// CAMBIARE
 
-            await this.getMemesUrls();
+            await this.getDbMemes();
 
-            if (!this.dbMemes.includes(meme.url)) { // se non esiste già un meme nel db con lo stesso url del meme votato allora aggiungo il meme al db
-                this.saveMemeToDb(index); // richiamo la funzione saveMemeToDb 
-            } else {
-                console.log('ESISTE GIà'); ///// QUI EDIT //////////////////////////////////////////7*********************
+            /////////////////////////////////////////////////////////////////////////////////////////////////
+            let found = false;
+
+            for (let i = 0; i < this.dbMemes.length; i++) {
+                console.log('passaggio');
+                if (meme.url === this.dbMemes[i].url) {
+                    found = true;
+                    break;
+                }
             }
+
+            if (!found) {
+                meme.score = 1; // aggiungo la proprietà score e assegno 
+                this.saveMemeToDb(index); // se non esiste già un meme nel db con lo stesso url del meme votato allora aggiungo il meme al db
+            } else {
+                console.log('ESISTE GIà');
+            }
+            /////////////////////////////////////////////////////////////////////////////////////////////////
 
             // elimino il meme perdente dall'array memes
             this.memes.splice(0, index); // rimuovi gli elementi prima dell'index del meme vincitore
