@@ -155,6 +155,9 @@ export default {
 <style lang="scss" scoped>
 .battle-card {
     background-color: #222f43;
+
+    -webkit-box-shadow: 0px 0px 11px 0px rgba(0, 0, 0, 0.30);
+    box-shadow: 0px 0px 11px 0px rgba(0, 0, 0, 0.30);
 }
 
 h3 {
