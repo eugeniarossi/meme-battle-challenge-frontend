@@ -15,7 +15,7 @@ export default {
 
 <template>
     <!-- leaderboard col -->
-    <div class="leaderboard-col col-3 mb-3 mb-xl-0">
+    <div class="leaderboard-col col-3 mb-3 mb-xl-0 p-0">
         <!-- offcanvas-button -->
         <button class="offcanvas-button btn d-xl-none px-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample">
             <i class="fa-solid fa-trophy"></i>
