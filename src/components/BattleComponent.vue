@@ -65,6 +65,15 @@ export default {
                     //console.log(response);
                 });
         },
+        async updateScore(id) {
+            // fa una richiesta update per aggiornare lo score di un meme già presente nel db
+            await axios.put(`http://127.0.0.1:8000/api/memes/${id}`, {}) // passo l'id del meme
+                .then(response => {
+                    console.log('Punteggio del meme aggiornato con successo', id);
+                }).catch(error => {
+                    console.error('Errore durante aggiornamento del punteggio del meme:', error);
+                });
+        },
         // funzione che richiama i memes dal db e li salva in 'dbMemes'
         async getDbMemes() {
             try {
@@ -97,13 +106,7 @@ export default {
                 votedMeme.score = 1; // gli assegna la proprietà score con valore 1
                 this.saveMemeToDb(index); // e lo inserisce nel db
             } else {
-                // se il meme votato è presente nel db fa una richiesta update per aggiornare lo score
-                axios.put(`http://127.0.0.1:8000/api/memes/${memeId}`, {}) // passo l'id del meme
-                    .then(response => {
-                        console.log('Punteggio del meme aggiornato con successo', memeId);
-                    }).catch(error => {
-                        console.error('Errore durante aggiornamento del punteggio del meme:', error);
-                    });
+                this.updateScore(memeId); // se è presente aggiorna lo score
             }
 
             // elimina il meme perdente dall'array 'memes'
@@ -133,10 +136,12 @@ export default {
         <!-- header -->
         <h3 class="mt-3 mb-4">Meme Battle Challenge</h3>
         <!-- battle card -->
-        <div class="battle-card d-flex flex-column flex-md-row justify-content-center align-items-center m-4 py-3 px-4 card">
+        <div
+            class="battle-card d-flex flex-column flex-md-row justify-content-center align-items-center m-4 py-3 px-4 card">
             <div class="m-2 m-md-3" v-for="(meme, index) in memes">
                 <!-- card element (element to repeat) -->
-                <CardElement :meme="meme" @click="memes.length > 1 && handleVote(index)" /> <!-- la funzione handleVote viene eseguita solo quando ci sono almeno due memes -->
+                <CardElement :meme="meme" @click="memes.length > 1 && handleVote(index)" />
+                <!-- la funzione handleVote viene eseguita solo quando ci sono almeno due memes -->
             </div>
         </div>
         <!-- /battle card -->
@@ -153,5 +158,4 @@ h3 {
     color: #88b8ff;
     font-family: 'Roboto Mono', monospace;
 }
-
 </style>

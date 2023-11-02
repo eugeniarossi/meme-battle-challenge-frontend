@@ -17,7 +17,9 @@ export default {
     <!-- leaderboard col -->
     <div class="leaderboard-col col-3 mb-3 mb-xl-0">
         <!-- offcanvas-button -->
-        <button class="offcanvas-button btn d-xl-none px-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample">Leaderboard</button>
+        <button class="offcanvas-button btn d-xl-none px-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample">
+            <i class="fa-solid fa-trophy"></i>
+        </button>
         <!-- offcanvas -->
         <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample">
             <div class="card bg-light" style="width: 100;">

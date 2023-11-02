@@ -23,7 +23,7 @@ export default {
         <!-- infos -->
         <div class="infos px-4 py-2">
             <!-- title -->
-            <h6>Title {{ meme.title }}</h6>
+            <h6>{{ meme.title }}</h6>
             <!-- score -->
             <strong><i class="fa-solid fa-trophy"></i> {{ meme.score }}</strong>
         </div>
