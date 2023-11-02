@@ -14,8 +14,4 @@ export default {
   <AppHome />
 </template>
 
-<style lang="scss">
- body {
-  background: #161b23;
- }
-</style>
+<style lang="scss"></style>

@@ -40,13 +40,18 @@ export default {
 </script>
 
 <template>
+    <!-- container -->
     <div class="container-fluid p-0 m-0">
+        <!-- row -->
         <div class="row w-100 flex-column flex-xl-row align-items-start align-items-xl-center justify-content-between">
-            <LeaderboardComponent :scoreOrderedMemes="scoreOrderedMemes" />
-            <!-- passo al componente la classifica tramite props -->
+            <!-- Leaderboard Component -->
+            <LeaderboardComponent :scoreOrderedMemes="scoreOrderedMemes" v-if="!this.dbMemes.length == 0" /> <!-- passo al componente la classifica tramite props -->
+            <!-- Battle Component -->
             <BattleComponent @updateLeaderboard="getLeaderboard()" /> <!-- ascolto l'evento emit del componente  -->
         </div>
+        <!-- /row -->
     </div>
+    <!-- /container -->
 </template>
 
 <style scoped lang="scss">

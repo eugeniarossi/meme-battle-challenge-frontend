@@ -2,7 +2,7 @@
 // importo axios
 import axios from 'axios';
 // importo CardElement
-import CardElement from './CardElement.vue'
+import CardElement from './CardElement.vue';
 
 export default {
     name: 'BattleComponent',
@@ -37,7 +37,7 @@ export default {
             while (this.memes.length < 2) { // finchè la lunghezza dell'array 'memes' non è 2
                 try {
                     await this.getMeme(); // esegue la funzione getMeme() 
-                    await new Promise(resolve => setTimeout(resolve, 500)); // timeout per evitare che prenda lo stesso meme della prima chiamata
+                    await new Promise(resolve => setTimeout(resolve, 700)); // timeout per evitare che prenda lo stesso meme della prima chiamata
                 } catch (error) {
                     console.error('Errore:', error);
                     break; // in caso di errore esce dal loop
@@ -127,16 +127,20 @@ export default {
 </script>
 
 <template>
-    <div class="col d-flex flex-column">
-        <h3 class="text-center mt-3 mb-4">Meme Battle Challenge</h3>
-        <div
-            class="battle-card d-flex flex-column flex-md-row justify-content-center align-items-center m-4 mx-xl-auto py-3 px-4 card">
+    <!-- battle col -->
+    <div class="battle-col col col-xl-7 d-flex flex-column align-items-center flex-grow-1">
+        <!-- header -->
+        <h3 class="mt-3 mb-4">Meme Battle Challenge</h3>
+        <!-- battle card -->
+        <div class="battle-card d-flex flex-column flex-md-row justify-content-center align-items-center m-4 py-3 px-4 card">
             <div class="m-2 m-md-3" v-for="(meme, index) in memes">
-                <CardElement :meme="meme" @click="memes.length > 1 && handleVote(index)" />
-                <!-- la funzione handleVote viene eseguita solo quando ci sono almeno due memes -->
+                <!-- card element (element to repeat) -->
+                <CardElement :meme="meme" @click="memes.length > 1 && handleVote(index)" /> <!-- la funzione handleVote viene eseguita solo quando ci sono almeno due memes -->
             </div>
         </div>
+        <!-- /battle card -->
     </div>
+    <!-- /battle col -->
 </template>
 
 <style lang="scss" scoped>
@@ -145,6 +149,8 @@ export default {
 }
 
 h3 {
-    color: #334765;
+    color: #88b8ff;
+    font-family: 'Roboto Mono', monospace;
 }
+
 </style>

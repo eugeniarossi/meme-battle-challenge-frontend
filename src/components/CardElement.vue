@@ -24,4 +24,8 @@ export default {
     cursor: pointer;
     transform: scale(1.05);
 }
+
+img {
+    max-height: 60vh;
+}
 </style>

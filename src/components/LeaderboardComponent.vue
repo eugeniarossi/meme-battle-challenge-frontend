@@ -14,45 +14,71 @@ export default {
 </script>
 
 <template>
-    <div class="leaderboard-col col-auto">
-        <button class="btn btn-primary d-xl-none px-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample">Leaderboard</button>
-
+    <!-- leaderboard col -->
+    <div class="leaderboard-col col-3 mb-3 mb-xl-0">
+        <!-- offcanvas-button -->
+        <button class="offcanvas-button btn d-xl-none px-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample">Leaderboard</button>
+        <!-- offcanvas -->
         <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample">
-
-            <div class="card" style="width: 100;">
+            <div class="card bg-light" style="width: 100;">
+                <!-- offcanvas-header -->
                 <div class="offcanvas-header d-flex align-items-center justify-content-between px-3">
-                    <h4 class="text-center py-2">Leaderboard</h4>
+                    <h4 class="text-center py-2">Leaderboard <i class="fa-solid fa-trophy"></i></h4>
+                    <!-- close button -->
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
+                <!-- /offcanvas-header -->
+                <!-- offcanvas-body -->
                 <ul class="offcanvas-body list-group list-group-flush">
-                    <li class="list-group-item d-flex p-3" v-for="meme in scoreOrderedMemes">
+                    <li class="list-group-item d-flex p-3 bg-light" v-for="meme in scoreOrderedMemes">
+                        <!-- Leaderboard list Item -->
                         <LeaderboardItem :meme="meme" />
                     </li>
                 </ul>
+                <!-- /offcanvas-body -->
             </div>
-
         </div>
+        <!-- /offcanvas -->
 
-        <div class="card d-none d-xl-block" style="width: 18rem;">
-            <h4 class="text-center py-2">Leaderboard</h4>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item d-flex p-3" v-for="meme in scoreOrderedMemes">
+        <!-- static-leaderboard -->
+        <div class="static-leaderboard card d-none d-xl-block bg-light">
+            <div class="heading d-flex  justify-content-between align-items-center px-3 pt-3 pb-2">
+                <h4>Leaderboard</h4>
+                <h4><i class="fa-solid fa-trophy"></i></h4>
+            </div>
+            <!-- ul -->
+            <ul class="static-ul list-group list-group-flush">
+                <li class="list-group-item" v-for="meme in scoreOrderedMemes">
+                    <!-- Leaderboard list Item -->
                     <LeaderboardItem :meme="meme" />
                 </li>
             </ul>
+            <!-- ul -->
         </div>
+        <!-- /static-leaderboard -->
     </div>
+    <!-- /leaderboard col -->
 </template>
 
 <style lang="scss" scoped>
-/*
-.leaderboard-col {
-    position: absolute;
-    top: 0;
-    left: 0;
-}*/
 .card {
     max-height: 100vh;
+}
+
+.heading {
+    height: 8vh;
+}
+.static-ul {
+    height: 92vh;
     overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.offcanvas-button {
+    background-color: #88b8ff;
+}
+
+.offcanvas-button:hover {
+    color: white;
 }
 </style>
