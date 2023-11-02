@@ -1,2 +1,7 @@
 @use '_partials/reset' as *;
 @use '_partials/variables' as *;
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background: #161b23;
+}
