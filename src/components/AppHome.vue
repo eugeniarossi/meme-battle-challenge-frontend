@@ -1,6 +1,8 @@
 <script>
 // importo axios
 import axios from 'axios';
+// importo lo store
+import store from '../store';
 
 // importo BattleComponent
 import BattleComponent from './BattleComponent.vue';
@@ -17,6 +19,7 @@ export default {
         return {
             databaseMemes: [], // memes presenti nel database
             scoreOrderedMemes: null, // memes presenti nel db in ordine decrescente secondo il valore 'score'
+            store
         }
     },
     methods: {
@@ -24,7 +27,7 @@ export default {
         async getLeaderboard() {
             try {
                 // chiamata GET per ottenere tutti i memes presenti nel database 
-                const response = await axios.get('http://127.0.0.1:8000/api/memes');
+                const response = await axios.get(this.store.apiDbUrl);
                 this.databaseMemes = response.data;
                 this.scoreOrderedMemes = [...this.databaseMemes].sort((a, b) => b.score - a.score); // ordina i meme secondo il valore 'score' in ordine decrescente
             } catch (error) {

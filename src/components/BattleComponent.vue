@@ -1,6 +1,9 @@
 <script>
 // importo axios
 import axios from 'axios';
+// importo lo store
+import store from '../store';
+
 // importo CardElement
 import CardElement from './CardElement.vue';
 
@@ -13,6 +16,7 @@ export default {
         return {
             memes: [], // memes attualmente nella battle
             dbMemes: [], // memes presenti nel db
+            store
         }
     },
     methods: {
@@ -21,7 +25,7 @@ export default {
             // controlla che non ci siano già due elementi in 'memes'
             if (this.memes.length < 2) {
                 try {
-                    const newMeme = await axios.get('https://meme-api.com/gimme').then(response => response.data);
+                    const newMeme = await axios.get(this.store.apiMemes).then(response => response.data);
                     // salva i dati della chiamata API nella variabile newMeme
 
                     this.memes.push(newMeme); // aggiunge 'newMeme' all'array 'memes'
@@ -60,14 +64,14 @@ export default {
                 url: meme.url
             };
             // chiamata post al db a cui passo l'oggetto data
-            axios.post('http://127.0.0.1:8000/api/memes', data)
+            axios.post(this.store.apiDbUrl, data)
                 .then((response) => {
                     //console.log(response);
                 });
         },
         async updateScore(id) {
             // fa una richiesta update per aggiornare lo score di un meme già presente nel db
-            await axios.put(`http://127.0.0.1:8000/api/memes/${id}`, {}) // passo l'id del meme
+            await axios.put(`${this.store.apiDbUrl}/${id}`, {}) // passo l'id del meme
                 .then(response => {
                     console.log('Punteggio del meme aggiornato con successo', id);
                 }).catch(error => {
@@ -77,7 +81,7 @@ export default {
         // funzione che richiama i memes dal db e li salva in 'dbMemes'
         async getDbMemes() {
             try {
-                const response = await axios.get('http://127.0.0.1:8000/api/memes');
+                const response = await axios.get(this.store.apiDbUrl);
                 this.dbMemes = response.data;
             } catch (error) {
                 console.error('Errore durante il recupero dei dati:', error);
