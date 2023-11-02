@@ -13,7 +13,7 @@ export default {
         return {
             memes: [], // memes attualmente nella battle
             votedMeme: null, // meme votato
-            dbMemes: [],
+            dbMemes: [], // memes salvati nel db
         }
     },
     methods: {
@@ -66,14 +66,13 @@ export default {
             try {
                 const response = await axios.get('http://127.0.0.1:8000/api/memes');
                 this.dbMemes = response.data;
-                console.log('VEDI QUII', this.dbMemes);
             } catch (error) {
                 console.error('Errore durante il recupero dei dati:', error);
             }
         },
         async voteMeme(index) {
             const meme = this.memes[index];
-            console.log('MEME CONSIDERATO', meme);
+            //console.log('MEME CONSIDERATO', meme);
             await this.getDbMemes();
 
             /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -96,7 +95,7 @@ export default {
                 // se il meme esiste già nel db faccio una richiesta update al database per aggiornare il suo score
                 axios.put(`http://127.0.0.1:8000/api/memes/${memeId}`, {})
                     .then(response => {
-                        console.log('Punteggio del meme aggiornato con successo');
+                        console.log('Punteggio del meme aggiornato con successo', memeId);
                     }).catch(error => {
                         console.error('Errore durante aggiornamento del punteggio del meme:', error);
                     });
@@ -119,7 +118,7 @@ export default {
 <template>
     <div class="row d-flex">
         <div class="col" v-for="(meme, index) in memes">
-            <CardElement :meme="meme" @click="memes.length > 1 && voteMeme(index)" />
+            <CardElement :meme="meme" @click="memes.length > 1 && voteMeme(index), $emit('getLeaderboard')" />
             <!-- la funzione voteMeme viene eseguita solo se la lughezza di memes è maggiore di uno -->
         </div>
     </div>
