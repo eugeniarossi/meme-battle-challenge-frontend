@@ -1,4 +1,5 @@
 <script>
+
 // importo LeaderboardItem
 import LeaderboardItem from './LeaderboardItem.vue';
 
@@ -32,7 +33,7 @@ export default {
                 <!-- /offcanvas-header -->
                 <!-- offcanvas-body -->
                 <ul class="offcanvas-body list-group list-group-flush">
-                    <li class="list-group-item d-flex p-3 bg-light" v-for="meme in scoreOrderedMemes">
+                    <li class="list-group-item d-flex p-3 bg-light" v-for="meme in this.scoreOrderedMemes">
                         <!-- Leaderboard list Item -->
                         <LeaderboardItem :meme="meme" />
                     </li>
@@ -50,7 +51,7 @@ export default {
             </div>
             <!-- ul -->
             <ul class="static-ul list-group list-group-flush">
-                <li class="list-group-item" v-for="meme in scoreOrderedMemes">
+                <li class="list-group-item" v-for="meme in this.scoreOrderedMemes">
                     <!-- Leaderboard list Item -->
                     <LeaderboardItem :meme="meme" />
                 </li>

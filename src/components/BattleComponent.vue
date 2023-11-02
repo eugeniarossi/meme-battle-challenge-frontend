@@ -15,7 +15,6 @@ export default {
     data() {
         return {
             memes: [], // memes attualmente nella battle
-            dbMemes: [], // memes presenti nel db
             store
         }
     },
@@ -73,18 +72,18 @@ export default {
             // fa una richiesta update per aggiornare lo score di un meme già presente nel db
             await axios.put(`${this.store.apiDbUrl}/${id}`, {}) // passo l'id del meme
                 .then(response => {
-                    console.log('Punteggio del meme aggiornato con successo', id);
+                    //console.log('Punteggio del meme aggiornato con successo', id);
                 }).catch(error => {
-                    console.error('Errore durante aggiornamento del punteggio del meme:', error);
+                    //console.error('Errore durante aggiornamento del punteggio del meme:', error);
                 });
         },
         // funzione che richiama i memes dal db e li salva in 'dbMemes'
         async getDbMemes() {
             try {
                 const response = await axios.get(this.store.apiDbUrl);
-                this.dbMemes = response.data;
+                this.store.dbMemes = response.data;
             } catch (error) {
-                console.error('Errore durante il recupero dei dati:', error);
+                //console.error('Errore durante il recupero dei dati:', error);
             }
         },
         // funzione che registra il voto 
@@ -98,10 +97,10 @@ export default {
             let memeId;
 
             // controlla se il meme votato è presente nel db confrontando le url
-            for (let i = 0; i < this.dbMemes.length; i++) {
-                if (votedMeme.url === this.dbMemes[i].url) { // se presente
+            for (let i = 0; i < this.store.dbMemes.length; i++) {
+                if (votedMeme.url === this.store.dbMemes[i].url) { // se presente
                     found = true;
-                    memeId = this.dbMemes[i].id; // salva l'id del meme
+                    memeId = this.store.dbMemes[i].id; // salva l'id del meme
                     break; // interrompe il ciclo
                 }
             }

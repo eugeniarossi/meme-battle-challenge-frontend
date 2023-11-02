@@ -17,7 +17,6 @@ export default {
     },
     data() {
         return {
-            databaseMemes: [], // memes presenti nel database
             scoreOrderedMemes: null, // memes presenti nel db in ordine decrescente secondo il valore 'score'
             layoutReversed: false, // definisco una variabile per tracciare il layout
             store,
@@ -29,8 +28,8 @@ export default {
             try {
                 // chiamata GET per ottenere tutti i memes presenti nel database 
                 const response = await axios.get(this.store.apiDbUrl);
-                this.databaseMemes = response.data;
-                this.scoreOrderedMemes = [...this.databaseMemes].sort((a, b) => b.score - a.score); // ordina i meme secondo il valore 'score' in ordine decrescente
+                this.store.dbMemes = response.data;
+                this.scoreOrderedMemes = [...this.store.dbMemes].sort((a, b) => b.score - a.score); // ordina i meme secondo il valore 'score' in ordine decrescente
             } catch (error) {
                 console.error('Errore durante il recupero dei dati:', error);
             }
@@ -83,8 +82,7 @@ export default {
         <div id="row-layout"
             class="row w-100 flex-column flex-xl-row align-items-start align-items-xl-center justify-content-between p-0 m-0">
             <!-- Leaderboard Component -->
-            <LeaderboardComponent :scoreOrderedMemes="scoreOrderedMemes" />
-            <!-- passo al componente la classifica tramite props -->
+            <LeaderboardComponent :scoreOrderedMemes="scoreOrderedMemes" /> <!-- passo al componente la classifica tramite props -->
             <!-- Battle Component -->
             <BattleComponent @updateLeaderboard="getLeaderboard()" /> <!-- ascolto l'evento emit del componente  -->
         </div>
