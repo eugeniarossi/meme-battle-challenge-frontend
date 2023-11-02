@@ -45,7 +45,7 @@ export default {
         <!-- row -->
         <div class="row w-100 flex-column flex-xl-row align-items-start align-items-xl-center justify-content-between">
             <!-- Leaderboard Component -->
-            <LeaderboardComponent :scoreOrderedMemes="scoreOrderedMemes" v-if="!this.dbMemes.length == 0" /> <!-- passo al componente la classifica tramite props -->
+            <LeaderboardComponent :scoreOrderedMemes="scoreOrderedMemes" v-if="!this.dbMemes == []" /> <!-- passo al componente la classifica tramite props -->
             <!-- Battle Component -->
             <BattleComponent @updateLeaderboard="getLeaderboard()" /> <!-- ascolto l'evento emit del componente  -->
         </div>

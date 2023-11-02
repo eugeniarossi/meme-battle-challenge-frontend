@@ -12,7 +12,7 @@ export default {
     data() {
         return {
             memes: [], // memes attualmente nella battle
-            votedMeme: null, // meme votato
+            //votedMeme: null, // meme votato
             dbMemes: [], // memes presenti nel db
         }
     },
@@ -112,6 +112,8 @@ export default {
             this.memes.splice(index + 1) // rimuove gli elementi dopo l'index del meme vincitore
 
             this.getMeme(); // chiama un nuovo meme
+
+            this.getDbMemes(); // richiama dinuovo i memes aggiornati nel db
         },
         // gestisce il voto al click
         async handleVote(index) {
