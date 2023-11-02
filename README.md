@@ -10,3 +10,11 @@ N.B. I punteggi devono essere salvati in maniera persistente su un DB dedicatoNO
 2.	i dati devono essere salvati in un DB a scelta
 3.	si può usare qualsiasi framework (anche ad es. bootstrap, jquery, etc)
 4.	il layout della pagina non è fissato, si può scegliere come visualizzare la battle challenge e la leaderboard
+
+***
+
+Passi da effettuare per avviare il progetto:
+1. Aprire il `terminale`
+2. Eseguire il comando `npm i` o `npm install`
+3. Eseguire il comando `npm audit fix` in caso di warning
+4. Eseguire il comando `npm run dev`
