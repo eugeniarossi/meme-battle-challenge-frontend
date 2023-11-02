@@ -12,7 +12,6 @@ export default {
     data() {
         return {
             memes: [], // memes attualmente nella battle
-            //votedMeme: null, // meme votato
             dbMemes: [], // memes presenti nel db
         }
     },
@@ -77,7 +76,7 @@ export default {
         },
         // funzione che registra il voto 
         async voteMeme(index) {
-            const meme = this.memes[index]; // salva il meme votato in 'meme'
+            const votedMeme = this.memes[index]; // salva il meme votato in 'meme'
 
             await this.getDbMemes(); // prende i memes del db e li salva in 'dbMemes'
 
@@ -87,7 +86,7 @@ export default {
 
             // controlla se il meme votato è presente nel db confrontando le url
             for (let i = 0; i < this.dbMemes.length; i++) {
-                if (meme.url === this.dbMemes[i].url) { // se presente
+                if (votedMeme.url === this.dbMemes[i].url) { // se presente
                     found = true;
                     memeId = this.dbMemes[i].id; // salva l'id del meme
                     break; // interrompe il ciclo
@@ -95,7 +94,7 @@ export default {
             }
 
             if (!found) { // se il meme votato non è presente nel db
-                meme.score = 1; // gli assegna la proprietà score con valore 1
+                votedMeme.score = 1; // gli assegna la proprietà score con valore 1
                 this.saveMemeToDb(index); // e lo inserisce nel db
             } else {
                 // se il meme votato è presente nel db fa una richiesta update per aggiornare lo score

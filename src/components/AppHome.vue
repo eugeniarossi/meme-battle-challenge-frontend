@@ -15,7 +15,7 @@ export default {
     },
     data() {
         return {
-            dbMemes: null, // memes presenti nel database
+            databaseMemes: [], // memes presenti nel database
             scoreOrderedMemes: null, // memes presenti nel db in ordine decrescente secondo il valore 'score'
         }
     },
@@ -25,8 +25,8 @@ export default {
             try {
                 // chiamata GET per ottenere tutti i memes presenti nel database 
                 const response = await axios.get('http://127.0.0.1:8000/api/memes');
-                this.dbMemes = response.data;
-                this.scoreOrderedMemes = [...this.dbMemes].sort((a, b) => b.score - a.score); // ordina i meme secondo il valore 'score' in ordine decrescente
+                this.databaseMemes = response.data;
+                this.scoreOrderedMemes = [...this.databaseMemes].sort((a, b) => b.score - a.score); // ordina i meme secondo il valore 'score' in ordine decrescente
             } catch (error) {
                 console.error('Errore durante il recupero dei dati:', error);
             }
@@ -45,7 +45,7 @@ export default {
         <!-- row -->
         <div class="row w-100 flex-column flex-xl-row align-items-start align-items-xl-center justify-content-between">
             <!-- Leaderboard Component -->
-            <LeaderboardComponent :scoreOrderedMemes="scoreOrderedMemes" v-if="!this.dbMemes == []" /> <!-- passo al componente la classifica tramite props -->
+            <LeaderboardComponent :scoreOrderedMemes="scoreOrderedMemes" /> <!-- passo al componente la classifica tramite props -->
             <!-- Battle Component -->
             <BattleComponent @updateLeaderboard="getLeaderboard()" /> <!-- ascolto l'evento emit del componente  -->
         </div>
