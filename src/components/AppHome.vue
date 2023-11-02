@@ -70,7 +70,7 @@ export default {
 
 <template>
     <!-- change layout button -->
-    <div id="layout-buttons" class="d-flex layout-buttons-right">
+    <div id="layout-buttons" class="d-flex layout-buttons-right" v-if="this.scoreOrderedMemes && this.scoreOrderedMemes.length > 0" >
         <button id="layout-position-button" class="layout-button mx-1 btn d-none d-xl-block" @click="changeLayout()">
             <i class="fa-solid fa-right-left"></i> Change layout
         </button>
@@ -82,7 +82,7 @@ export default {
         <div id="row-layout"
             class="row w-100 flex-column flex-xl-row align-items-start align-items-xl-center justify-content-between p-0 m-0">
             <!-- Leaderboard Component -->
-            <LeaderboardComponent :scoreOrderedMemes="scoreOrderedMemes" /> <!-- passo al componente la classifica tramite props -->
+            <LeaderboardComponent :scoreOrderedMemes="scoreOrderedMemes" v-if="this.scoreOrderedMemes && this.scoreOrderedMemes.length > 0" /> <!-- passo al componente la classifica tramite props -->
             <!-- Battle Component -->
             <BattleComponent @updateLeaderboard="getLeaderboard()" /> <!-- ascolto l'evento emit del componente  -->
         </div>
