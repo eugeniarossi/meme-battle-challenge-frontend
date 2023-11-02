@@ -46,6 +46,7 @@ export default {
         <!-- static-leaderboard -->
         <div class="static-leaderboard card d-none d-xl-block bg-light">
             <div class="heading d-flex  justify-content-between align-items-center px-3 pt-3">
+                <!-- heading -->
                 <h4>Leaderboard</h4>
                 <h4><i class="fa-solid fa-trophy"></i></h4>
             </div>
