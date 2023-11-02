@@ -2,33 +2,26 @@
 
 export default {
     name: 'CardElement',
-    props: {
+    props: { // dichiaro le props
         meme: Object
-    },
-    data() {
-        return {
-            loading: true,
-        }
-    },
-    methods: {
-        handleImageLoad() {
-            this.loading = false; /////////////////// ELIMINARE O IMPLEMENTARE
-        },
     }
 }
 </script>
 
 <template>
     <!-- card meme -->
-    <div class="card rounded-3 text-center bg-light border-secondary" style="width: 18rem;">
-        <!-- meme preview -->
-        <img :src="meme.preview[2]" :alt="meme.title" />
-        <div class="card-body" v-if="!meme.score === 0">
-            <!-- punteggio -->
-            <h4 class="card-title">Punteggio: {{ meme.score }}</h4>
-        </div>
+    <div class="card rounded-3 bg-light border-secondary p-3">
+        <!-- meme preview big -->
+        <img :src="meme.preview[2]" :alt="meme.title" class="d-none d-lg-block" />
+        <!-- meme preview small -->
+        <img :src="meme.preview[1]" :alt="meme.title" class="d-lg-none" />
     </div>
     <!-- /card meme -->
 </template>
 
-<style lang="scss"></style>
+<style lang="scss" scoped>
+.card:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+}
+</style>

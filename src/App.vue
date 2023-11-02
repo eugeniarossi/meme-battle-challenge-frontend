@@ -1,4 +1,5 @@
 <script>
+// importo AppHome
 import AppHome from './components/AppHome.vue';
 
 export default {
@@ -13,4 +14,8 @@ export default {
   <AppHome />
 </template>
 
-<style lang="scss"></style>
+<style lang="scss">
+ body {
+  background: #161b23;
+ }
+</style>
